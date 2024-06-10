@@ -11,6 +11,97 @@
             height: 100%;
             overflow: hidden;
         }
+        canvas {
+            display: block;
+            margin: auto;
+            margin-top: 50px;
+            border: 1px solid black;
+        }
+    </style>
+</head>
+<body>
+   <canvas id="gameCanvas" width="800" height="600"></canvas>
+
+   <script>
+       // JavaScript code goes here
+       // Set up Canvas
+       const canvas = document.getElementById('gameCanvas');
+       const ctx = canvas.getContext('2d');
+
+       // Load images
+       const cat_img = new Image();
+       cat_img.src = 'cat.png';
+       const mouse_img = new Image();
+       mouse_img.src = 'mouse.png';
+
+       // Set initial positions
+       let cat_pos = [100, 100];
+       let mouse_pos = [600, 400];
+       const mouse_speed = 3;
+
+       // Main loop
+       let running = true;
+       const FPS = 30;
+
+       function update() {
+           // Move the mouse randomly
+           const directions = ['up', 'down', 'left', 'right'];
+           const direction = directions[Math.floor(Math.random() * directions.length)];
+           switch (direction) {
+               case 'up':
+                   mouse_pos[1] -= mouse_speed;
+                   break;
+               case 'down':
+                   mouse_pos[1] += mouse_speed;
+                   break;
+               case 'left':
+                   mouse_pos[0] -= mouse_speed;
+                   break;
+               case 'right':
+                   mouse_pos[0] += mouse_speed;
+                   break;
+           }
+       }
+
+       function draw() {
+           // Clear the canvas
+           ctx.clearRect(0, 0, canvas.width, canvas.height);
+           
+           // Draw cat and mouse
+           ctx.drawImage(cat_img, cat_pos[0], cat_pos[1]);
+           ctx.drawImage(mouse_img, mouse_pos[0], mouse_pos[1]);
+       }
+
+       function gameLoop() {
+           if (!running) return;
+           
+           update();
+           draw();
+           
+           setTimeout(gameLoop, 1000 / FPS);
+       }
+
+       gameLoop();
+   </script>
+</body>
+</html>
+
+
+
+
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cat Chases Mouse</title>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            overflow: hidden;
+        }
         video {
             width: 100%;
             height: 100%;
@@ -24,5 +115,5 @@
         Your browser does not support the video tag.
     </video>
 </body>
-</html>
+</html> -->
 
